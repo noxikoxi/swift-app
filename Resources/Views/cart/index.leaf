@@ -1,0 +1,30 @@
+#extend("base"):
+    #export("title"):
+        Koszyk
+    #endexport
+    #export("content"):
+        <h1>Twój koszyk</h1>
+        #if(items && count(items) > 0):
+            <ul>
+                #for(item in items):
+                    <li>
+                        <form action="/cart/update" method="POST" class="cartForm">
+                            <strong>#(item.productName)</strong>
+                            <label>
+                                Ilość:
+                                <input type="number" min=0 name="quantity" value="#(item.quantity)" min="1" required>
+                            </label>
+                            <input type="hidden" name="productID" value="#(item.productID)">
+                            <button type="submit">Aktualizuj</button>
+                        </form>
+                    </li>
+                #endfor
+            </ul>
+            <form method="get" action="/cart/clear">
+                <button type="submit">Wyczyść koszyk</button>
+            </form>
+        #else:
+            <p>Koszyk jest pusty.</p>
+        #endif
+    #endexport
+#endextend

@@ -1,0 +1,33 @@
+#extend("base"):
+    #export("title"):
+        Tagi
+    #endexport
+    #export("content"):
+        <h1>Lista tagów</h1>
+        <ul>
+            #if(tags):
+                #for(tag in tags):
+                    <li>
+                    <a href="/tags/#(tag.id)">#(tag.name)</a> 
+                    <span>(#(tag.id))</span>
+                    <form action="/tags/delete/#(tag.id)" method="GET">
+                        <button type="submit" class="delete-button">Usuń</button>
+                    </form>
+                    </li>
+                #endfor
+            #else:
+                <p>Brak tagów</p>
+            #endif
+        </ul>
+        <br>
+        <h1> Stwórz Tag </h1>
+        <form action="/tags" method="POST" class="dataForm">
+        <div>
+            <label for="name">Nazwa Tagu:</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <br>
+        <button type="submit">Utwórz</button>
+        </form>
+    #endexport
+#endextend

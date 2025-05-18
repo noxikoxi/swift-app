@@ -1,0 +1,59 @@
+#extend("base"):
+    #export("title"):
+        Produkty
+    #endexport
+    #export("content"):
+        <h1>Lista Produktów</h1>
+        <ul>
+            #if(products):
+                #for(product in products):
+                    <li>
+                    <a href="/products/#(product.id)">#(product.name)</a> 
+                    <span>(#(product.price))</span>
+                    <span>(#(product.categoryName))</span>
+                    <div class="product-tags">
+                                #for(tag in product.tags): 
+                                    <span class="tag-badge">#(tag.name)</span>
+                                #endfor
+                            </div>
+                    <form action="/products/delete/#(product.id)" method="GET">
+                        <button type="submit" class="delete-button">Usuń</button>
+                    </form>
+                    <form action="/cart/add" method="POST" style="display:flex; align-items: center;">
+                        <input type="text" id="productID" name="productID" value="#(product.id)" style="display:none;"/>
+                        <button type="submit">Dodaj do koszyka</button>
+                    </form>
+                    </li>
+                #endfor
+            #else:
+                <p>Brak Produktów</p>
+            #endif
+        </ul>
+        <br>
+        <h1> Stwórz Produkt </h1>
+        <form action="/products" method="POST" class="dataForm">
+            <div>
+                <label for="name">Nazwa Produktu:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="price">Cena Produktu:</label>
+                <input type="number" id="price" name="price" required step="0.01">
+            </div>
+            <div>
+                <label for="categoryID">Kategoria:</label>
+                <select id="categoryID" name="categoryID" required>
+                    #if(categories):
+                        #for(category in categories):
+                            <option value="#(category.id)">#(category.name)</option> 
+                        #endfor
+                    #else:
+                        <option value="">Brak dostępnych kategorii</option>
+                    #endif
+                </select>
+            </div>
+        <br>
+        <button type="submit">Utwórz</button>
+    </form>
+    #endexport
+#endextend

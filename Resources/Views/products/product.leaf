@@ -1,0 +1,73 @@
+#extend("base"):
+    #export("title"):
+        Produkt
+    #endexport
+    #export("content"):
+        <h1>Produkt </h1>
+        <ul>
+            <li><span style="font-weight: bold">ID:</span> #(product.id) </li>
+            <li><span style="font-weight: bold">Nazwa:</span> #(product.name)</li>
+            <li><span style="font-weight: bold">Cena:</span> #(product.price)</li>
+            <li><span style="font-weight: bold">Kategoria:</span> #(product.categoryName)</li>
+        </ul>
+        <div class="product-tags" style="flex-direction: column;align-items: center;">
+            <h3>Tagi</h3>
+            <ul style="display: flex; gap: 5px;">
+                #if(product.tags && count(product.tags) > 0):
+                    #for(tag in product.tags):
+                        <li>
+                            <span>#(tag.name)</span>
+                                <form action="/products/#(product.id)/tags/#(tag.id)" method="GET">
+                                    <button type="submit" class="delete-button">Usuń Tag</button>
+                                </form>
+                            </li>
+                        #endfor
+                    </ul>
+                #else:
+                    <p>Brak przypisanych tagów.</p>
+                #endif
+        </div>
+        <h2>Edytuj Produkt </h2>
+        <form action="/products/#(product.id)" method="POST" class="dataForm">
+            <div>
+                <label for="name">Nazwa Produktu:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div>
+                <label for="price">Cena Produktu:</label>
+                <input type="number" id="price" name="price" required step="0.01">
+            </div>
+            <div>
+                <label for="categoryID">Kategoria:</label>
+                <select id="categoryID" name="categoryID" required>
+                    #if(categories && count(categories) > 0):
+                        #for(category in categories):
+                            <option value="#(category.id)">#(category.name)</option> 
+                        #endfor
+                    #else:
+                        <option value="">Brak dostępnych kategorii</option>
+                    #endif
+                </select>
+            </div>
+        <br>
+        <button type="submit">Zapisz</button>
+        </form>
+        <h2>Dodaj Tag</h2>
+        <form action="/products/#(product.id)/tags" method="POST" class="dataForm">
+            <div>
+                <label for="tagID">Wybierz Tag:</label>
+                <select id="tagID" name="tagID" required>
+                    #if(availableTags && count(availableTags) > 0):
+                        #for(tag in availableTags):
+                            <option value="#(tag.id)">#(tag.name)</option>
+                        #endfor
+                    #else:
+                        <option value="">Brak dostępnych tagów</option>
+                    #endif
+                </select>
+            </div>
+            <br>
+            <button type="submit">Dodaj Tag</button>
+        </form>
+    #endexport
+#endextend

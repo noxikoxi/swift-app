@@ -1,0 +1,19 @@
+#extend("base"):
+    #export("title"):
+        Kategoria
+    #endexport
+    #export("content"):
+        <h1>Tag </h1>
+        <h1>ID: #(tag.id) </h1>
+        <h2>Nazwa: #(tag.name)</h2>
+        <h2>Edytuj Tag </h2>
+        <form action="/tags/#(tag.id)" method="POST" class="dataForm">
+            <div>
+                <label for="name">Nazwa Tagu:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <br>
+            <button type="submit">Zapisz</button>
+        </form>
+    #endexport
+#endextend

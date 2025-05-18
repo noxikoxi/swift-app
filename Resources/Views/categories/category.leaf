@@ -1,0 +1,19 @@
+#extend("base"):
+    #export("title"):
+        Kategoria
+    #endexport
+    #export("content"):
+        <h1>Kategoria </h1>
+        <h1>ID: #(category.id) </h1>
+        <h2>Nazwa: #(category.name)</h2>
+        <h2> Edytuj kategorie </h2>
+        <form action="/categories/#(category.id)" method="POST" class="dataForm">
+            <div>
+                <label for="name">Nazwa kategorii:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <br>
+            <button type="submit">Zapisz</button>
+        </form>
+    #endexport
+#endextend
